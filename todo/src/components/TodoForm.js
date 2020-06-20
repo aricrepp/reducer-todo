@@ -1,31 +1,29 @@
 import React, {useState} from 'react';
 
-const TodoForm = props => {
+const TodoForm = ({dispatch}) => {
   
-  
+  const [input, setInput] = useState('');
 
   const handleChanges = e => {
-    props.setNewTodo({ [e.target.name]: e.target.value });
+    setInput( e.target.value );
   };
 
-  // const submitItem = e => {
-  //   e.preventDefault();
-  //   this.setState({ item: '',  });
-  //   this.props.addItem(e, this.state.item);
-  // };
+  const submitItem = e => {
+    e.preventDefault();
+    dispatch({type: "ADD_TASK", payload: input})
+    setInput('');
+  };
 
 
     return (
-      <form onSubmit={() => {
-        props.dispatch({type: "IS_COMPLETED"})
-      }}>
+      <form onSubmit={submitItem}>
         <input
           type="text"
-          value={props.newTodo}
+          value={input}
           name="item"
           onChange={handleChanges}
         />
-        <button>Add</button>
+        <button >Add</button>
       </form>
     );
   
